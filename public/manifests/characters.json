@@ -1,0 +1,30 @@
+{
+  "fps": 30,
+  "frames": [
+    1,
+    220
+  ],
+  "characters": [
+    {
+      "id": "male",
+      "url": "models/characters/male-valentine.glb",
+      "clip": "male_GiftStory",
+      "bytes": 1692236
+    },
+    {
+      "id": "female",
+      "url": "models/characters/female-valentine.glb",
+      "clip": "female_GiftStory",
+      "bytes": 2267708
+    }
+  ],
+  "milestones": {
+    "held": 1,
+    "placed": 65,
+    "joined": 105,
+    "opened": 170,
+    "rest": 220
+  },
+  "wardrobe": "oatmeal male cardigan; burgundy female cardigan, ivory top and blue jeans",
+  "sourceLicense": "Sam anatomy/rig CC0 per supplied source README; project wardrobe modifications"
+}
