@@ -1,0 +1,86 @@
+[
+  {
+    "id": "c01",
+    "half": "left",
+    "shape": "Trái tim",
+    "message": "Anh yêu cách em khiến những điều giản dị trở nên đáng nhớ."
+  },
+  {
+    "id": "c02",
+    "half": "left",
+    "shape": "Ngôi sao",
+    "message": "Giữa bao điều rộng lớn, anh vẫn luôn muốn tìm thấy em."
+  },
+  {
+    "id": "c03",
+    "half": "left",
+    "shape": "Mặt trăng",
+    "message": "Mong mỗi đêm của em đều yên bình, và có anh trong lời chúc ngủ ngon."
+  },
+  {
+    "id": "c04",
+    "half": "left",
+    "shape": "Mặt trời",
+    "message": "Cảm ơn em đã mang đến những ngày ấm áp hơn."
+  },
+  {
+    "id": "c05",
+    "half": "left",
+    "shape": "Bông hoa",
+    "message": "Nụ cười của em là điều anh muốn được ngắm thêm mỗi ngày."
+  },
+  {
+    "id": "c06",
+    "half": "left",
+    "shape": "Chiếc lá",
+    "message": "Anh thương cả những điều nhỏ xíu mà đôi khi em chẳng để ý ở mình."
+  },
+  {
+    "id": "c07",
+    "half": "left",
+    "shape": "Vỏ sò",
+    "message": "Mình cùng dành một ngày ra biển, nghe sóng và chẳng cần vội nhé."
+  },
+  {
+    "id": "c08",
+    "half": "right",
+    "shape": "Chiếc nơ",
+    "message": "Hôm nay có một món quà, còn những ngày sau vẫn có anh bên cạnh."
+  },
+  {
+    "id": "c09",
+    "half": "right",
+    "shape": "Chìa khóa",
+    "message": "Có những điều anh chỉ muốn kể khi người lắng nghe là em."
+  },
+  {
+    "id": "c10",
+    "half": "right",
+    "shape": "Ổ khóa",
+    "message": "Anh hứa sẽ lắng nghe, kể cả những ngày mình chưa hiểu nhau."
+  },
+  {
+    "id": "c11",
+    "half": "right",
+    "shape": "Kim cương",
+    "message": "Những kỷ niệm có em là điều anh luôn muốn giữ gìn."
+  },
+  {
+    "id": "c12",
+    "half": "right",
+    "shape": "Gấu nhỏ",
+    "message": "Gửi em một cái ôm, để những ngày mỏi mệt dịu đi một chút."
+  },
+  {
+    "id": "c13",
+    "half": "right",
+    "shape": "Phong thư",
+    "message": "Buổi hẹn tiếp theo, mình lại dành thời gian thật trọn vẹn cho nhau nhé."
+  },
+  {
+    "id": "c14",
+    "half": "right",
+    "shape": "Hai trái tim",
+    "message": "Điều anh mong nhất là chúng mình vẫn chọn đồng hành cùng nhau."
+  }
+]
