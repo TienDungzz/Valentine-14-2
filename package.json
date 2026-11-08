@@ -1,0 +1,38 @@
+{
+  "name": "valentine-red",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Valentine Red — Hai nửa, một tình yêu",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "check": "node script/check.mjs && node script/check-assets.mjs",
+    "check:format": "node script/check.mjs format",
+    "check:docs": "node script/check.mjs docs",
+    "check:content": "node script/check.mjs content",
+    "check:code": "node script/check.mjs code",
+    "check:release": "node script/check.mjs --release && node script/check-assets.mjs",
+    "test:checkers": "node --test script/test/checkers.test.mjs",
+    "test": "node --test script/test/checkers.test.mjs tests/*.test.mjs",
+    "dev": "vite --host 127.0.0.1 --port 5179 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check:assets": "node script/check-assets.mjs",
+    "assets:optimize": "node script/optimize-characters.mjs",
+    "qa:geometry": "node script/preview-geometry.mjs"
+  },
+  "dependencies": {
+    "three": "0.187.0",
+    "vite": "8.3.6"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
+    "@xmldom/xmldom": "0.9.12",
+    "meshoptimizer": "1.2.0",
+    "sharp": "0.35.5"
+  }
+}
