@@ -1,22 +1,13 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
-export function createEnvironment(scene) {
-  const objects = new THREE.Group();
-  scene.add(objects);
-  const materialCache = new Map();
+function geometryTools(objects) {
+  const cache = new Map();
   const mat = (color, roughness = .8, metalness = 0) => {
     const key = [color, roughness, metalness].join(':');
-    if (!materialCache.has(key)) materialCache.set(key, new THREE.MeshStandardMaterial({ color, roughness, metalness }));
-    return materialCache.get(key);
+    if (!cache.has(key)) cache.set(key, new THREE.MeshStandardMaterial({ color, roughness, metalness }));
+    return cache.get(key);
   };
-  const stone = mat('#decbbd');
-  const brass = mat('#af8052', .4, .55);
-  const timber = mat('#4d353b');
-  const leaf = mat('#344e3e');
-  const leafLight = mat('#58745a');
-  const rose = mat('#b65365');
-  const clay = mat('#78524d');
   function mesh(geometry, material, position, parent = objects) {
     const obj = new THREE.Mesh(geometry, material);
     obj.position.set(...position);
@@ -31,6 +22,12 @@ export function createEnvironment(scene) {
     obj.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), b.sub(a).normalize());
     return obj;
   }
+  return { mat, mesh, bar };
+}
+
+function addFloor({ mesh, mat }) {
+  const stone = mat('#decbbd');
+  const brass = mat('#af8052', .4, .55);
   const floor = mesh(new THREE.CylinderGeometry(3.5, 3.65, .18, 64), stone, [0, -.1, 0]);
   floor.receiveShadow = true;
   // Subtle tile joints, no additional texture downloads.
@@ -38,16 +35,28 @@ export function createEnvironment(scene) {
     mesh(new THREE.BoxGeometry(6.5, .002, .008), mat('#c4afa4'), [0, .002, i * .75]);
     mesh(new THREE.BoxGeometry(.008, .002, 6.5), mat('#c4afa4'), [i * .75, .002, 0]);
   }
-  const tableTop = mesh(new THREE.CylinderGeometry(.92, .92, .065, 64), mat('#f0dcc7', .45), [0, .975, .18]);
+  mesh(new THREE.CylinderGeometry(.92, .92, .065, 64), mat('#f0dcc7', .45), [0, .975, .18]);
   mesh(new THREE.CylinderGeometry(.032, .065, .93, 16), brass, [0, .49, .18]);
   mesh(new THREE.CylinderGeometry(.38, .4, .04, 48), brass, [0, .02, .18]);
   mesh(new THREE.TorusGeometry(.918, .012, 8, 64), brass, [0, .98, .18]).rotation.x = Math.PI / 2;
+}
+
+function addRailings({ bar, mat }) {
+  const brass = mat('#af8052', .4, .55);
   for (let i = 0; i < 14; i++) {
     const x = -3.25 + i * .5;
     bar([x, 0, -1.65], [x, 1, -1.65], .018, brass);
   }
   bar([-3.25, 1, -1.65], [3.25, 1, -1.65], .028, brass);
   bar([-3.25, .2, -1.65], [3.25, .2, -1.65], .018, brass);
+}
+
+function addGarden({ mesh, bar, mat }) {
+  const timber = mat('#4d353b');
+  const leaf = mat('#344e3e');
+  const leafLight = mat('#58745a');
+  const rose = mat('#b65365');
+  const clay = mat('#78524d');
   // A light pergola frames the couple, with an open view towards the city.
   for (const x of [-1.72, 1.72]) {
     bar([x, 0, -.93], [x, 2.6, -.93], .045, timber);
@@ -79,6 +88,9 @@ export function createEnvironment(scene) {
       }
     }
   }
+}
+
+function addCity({ mesh, mat }) {
   // Distant skyline: seeded arithmetic, consistent on every visit.
   const city = mat('#4b405c');
   for (let i = 0; i < 24; i++) {
@@ -90,6 +102,9 @@ export function createEnvironment(scene) {
       mesh(new THREE.PlaneGeometry(.04, .065), windows, [x - .07, j * .22, -4.03 - (i % 3) * .25]);
     }
   }
+}
+
+function addLighting(scene) {
   const skyCanvas = document.createElement('canvas');
   skyCanvas.width = 2; skyCanvas.height = 256;
   const ctx = skyCanvas.getContext('2d');
@@ -110,6 +125,10 @@ export function createEnvironment(scene) {
   scene.add(key);
   const fill = new THREE.DirectionalLight('#a7baff', 1);
   fill.position.set(3, 2, -3); scene.add(fill);
+  return sky;
+}
+
+function batchEnvironment(objects) {
   // All environment geometry is static: merge by shared material to reduce draw calls.
   objects.updateMatrixWorld(true);
   const batches = new Map();
@@ -131,5 +150,17 @@ export function createEnvironment(scene) {
     batch.receiveShadow = true;
     objects.add(batch);
   }
-  return { objects, sky, tableTop };
+}
+
+export function createEnvironment(scene) {
+  const objects = new THREE.Group();
+  scene.add(objects);
+  const tools = geometryTools(objects);
+  addFloor(tools);
+  addRailings(tools);
+  addGarden(tools);
+  addCity(tools);
+  const sky = addLighting(scene);
+  batchEnvironment(objects);
+  return { objects, sky };
 }
