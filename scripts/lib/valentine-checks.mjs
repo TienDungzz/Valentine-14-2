@@ -4,7 +4,7 @@ import { spawnSync } from 'node:child_process';
 
 const SKIP = new Set([
   '.git', '.agents', '.codex', '.aws', 'node_modules', 'dist', 'build',
-  'coverage', '.qa', '.cache', '.venv', '__pycache__',
+  'example-standards', 'coverage', '.qa', '.cache', '.venv', '__pycache__',
 ]);
 const TEXT = new Set([
   '.md', '.json', '.js', '.mjs', '.cjs', '.ts', '.tsx', '.jsx', '.css',
@@ -127,6 +127,42 @@ export function checkBoundaries(file, text) {
   return issues;
 }
 
+function checkCode(root, files, texts, issues, notes) {
+    for (const [file, text] of texts) {
+      if (extname(file) === '.json') {
+        try { JSON.parse(text); } catch (error) { issues.push(file + ': invalid JSON: ' + error.message); }
+      }
+      if (SOURCE.has(extname(file))) issues.push(...checkBoundaries(file, text));
+      if (['.js', '.mjs', '.cjs'].includes(extname(file))) {
+        const result = spawnSync(process.execPath, ['--check', resolve(root, file)], {
+          encoding: 'utf8', timeout: 15000,
+        });
+        if (result.error || result.status !== 0) {
+          issues.push(file + ': JavaScript syntax check failed\n' + (result.error?.message ?? result.stderr));
+        }
+      }
+    }
+    const appFiles = files.filter((file) => file.startsWith('src/') && SOURCE.has(extname(file)));
+    notes.push(appFiles.length ? 'Application source files: ' + appFiles.length : 'Application source: NOT IMPLEMENTED (no src code to validate).');
+    const typed = appFiles.filter((file) => /\.(ts|tsx|jsx)$/.test(file));
+    if (typed.length) {
+      const config = resolve(root, 'tsconfig.json');
+      const compiler = resolve(root, 'node_modules/typescripts/bin/tsc');
+      if (!existsSync(config) || !existsSync(compiler)) {
+        issues.push('TypeScript/JSX found: configure tsconfig.json and install a local TypeScript compiler before code checks can pass.');
+      } else {
+        const result = spawnSync(process.execPath, [compiler, '--noEmit', '--project', config], {
+          encoding: 'utf8', timeout: 60000,
+        });
+        if (result.error || result.status !== 0) {
+          issues.push('TypeScript check failed\n' + (result.error?.message ?? result.stdout + result.stderr));
+        }
+        notes.push('TypeScript strictness and compiler options must be reviewed in the application toolchain.');
+      }
+    }
+    notes.push('Architecture scan: static import/export with relative paths and @/ alias only; not a full dependency graph.');
+  }
+
 export function runChecks(root, options = {}) {
   const categories = new Set(options.categories ?? ['format', 'docs', 'content', 'code']);
   const issues = [];
@@ -150,46 +186,12 @@ export function runChecks(root, options = {}) {
     notes.push('Docs links: local file targets only; heading anchors are not validated.');
   }
   if (categories.has('content')) {
-    const file = 'docs/frame-authoring-guide.md';
+    const file = 'docs/product/frame-authoring-guide.md';
     if (!texts.has(file)) issues.push(file + ': required chocolate table is missing');
     else issues.push(...checkChocolateTable(texts.get(file)));
-    notes.push('Content: documentation table only; runtime data/GLB require separate validators when implemented.');
+    notes.push('Content: documentation table only; runtime data and GLB are checked by tests and the character gate.');
   }
-  if (categories.has('code')) {
-    for (const [file, text] of texts) {
-      if (extname(file) === '.json') {
-        try { JSON.parse(text); } catch (error) { issues.push(file + ': invalid JSON: ' + error.message); }
-      }
-      if (SOURCE.has(extname(file))) issues.push(...checkBoundaries(file, text));
-      if (['.js', '.mjs', '.cjs'].includes(extname(file))) {
-        const result = spawnSync(process.execPath, ['--check', resolve(root, file)], {
-          encoding: 'utf8', timeout: 15000,
-        });
-        if (result.error || result.status !== 0) {
-          issues.push(file + ': JavaScript syntax check failed\n' + (result.error?.message ?? result.stderr));
-        }
-      }
-    }
-    const appFiles = files.filter((file) => file.startsWith('src/') && SOURCE.has(extname(file)));
-    notes.push(appFiles.length ? 'Application source files: ' + appFiles.length : 'Application source: NOT IMPLEMENTED (no src code to validate).');
-    const typed = appFiles.filter((file) => /\.(ts|tsx|jsx)$/.test(file));
-    if (typed.length) {
-      const config = resolve(root, 'tsconfig.json');
-      const compiler = resolve(root, 'node_modules/typescript/bin/tsc');
-      if (!existsSync(config) || !existsSync(compiler)) {
-        issues.push('TypeScript/JSX found: configure tsconfig.json and install a local TypeScript compiler before code checks can pass.');
-      } else {
-        const result = spawnSync(process.execPath, [compiler, '--noEmit', '--project', config], {
-          encoding: 'utf8', timeout: 60000,
-        });
-        if (result.error || result.status !== 0) {
-          issues.push('TypeScript check failed\n' + (result.error?.message ?? result.stdout + result.stderr));
-        }
-        notes.push('TypeScript strictness and compiler options must be reviewed in the application toolchain.');
-      }
-    }
-    notes.push('Architecture scan: static import/export with relative paths and @/ alias only; not a full dependency graph.');
-  }
+  if (categories.has('code')) checkCode(root, files, texts, issues, notes);
   if (options.release) {
     if (!files.some((file) => file.startsWith('src/') && SOURCE.has(extname(file)))) {
       issues.push('Release requires application source under src/.');

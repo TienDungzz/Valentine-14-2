@@ -5,7 +5,7 @@ import { dirname, join } from 'node:path';
 import test from 'node:test';
 import {
   checkBoundaries, checkChocolateTable, checkFormat, checkLinks, runChecks,
-} from '../lib/checks.mjs';
+} from '../../scripts/lib/valentine-checks.mjs';
 
 function fixture(t, files) {
   const root = mkdtempSync(join(tmpdir(), 'valentine-checkers-'));
@@ -82,7 +82,7 @@ test('code checks reject invalid JSON and JavaScript syntax', (t) => {
 });
 
 test('source absence is explicit and release preflight fails without app/build', (t) => {
-  const root = fixture(t, { 'package.json': '{}\n', 'script/valid.mjs': 'export const x = 1;\n' });
+  const root = fixture(t, { 'package.json': '{}\n', 'scripts/valid.mjs': 'export const x = 1;\n' });
   const normal = runChecks(root, { categories: ['code'] });
   assert.deepEqual(normal.issues, []);
   assert.ok(normal.notes.some((note) => note.includes('NOT IMPLEMENTED')));
