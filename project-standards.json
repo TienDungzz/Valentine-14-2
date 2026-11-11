@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "project": {
+    "name": "Valentine Red",
+    "kind": "static-frontend-3d"
+  },
+  "checks": [
+    "docs",
+    "structure",
+    "assets",
+    "css",
+    "quality"
+  ],
+  "documentation": {
+    "required": [
+      "docs/README.md",
+      "docs/getting-started.md",
+      "docs/project.md",
+      "docs/frontend/README.md",
+      "docs/ui/README.md",
+      "docs/ui/css-variables.md",
+      "docs/3d/README.md",
+      "docs/3d/performance-report.md",
+      "docs/security/README.md",
+      "docs/security-review.md",
+      "docs/quality/README.md",
+      "docs/product/product-requirements.md",
+      "docs/product/scene-design.md"
+    ],
+    "scan": [
+      "docs",
+      "README.md",
+      "scripts/README.md",
+      "art/characters/README.md"
+    ]
+  },
+  "structure": [
+    {
+      "name": "frontend",
+      "enabled": true,
+      "root": "src",
+      "components": [
+        {
+          "name": "bootstrap",
+          "paths": [
+            "app/main.js"
+          ],
+          "required": true
+        },
+        {
+          "name": "state-validation",
+          "paths": [
+            "domain/gift/story.js"
+          ],
+          "required": true
+        },
+        {
+          "name": "content",
+          "paths": [
+            "content"
+          ],
+          "required": true
+        },
+        {
+          "name": "motion-preferences",
+          "paths": [
+            "shared/lib/preferences.js"
+          ],
+          "required": true
+        },
+        {
+          "name": "styles",
+          "paths": [
+            "shared/styles"
+          ],
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "webgl",
+      "enabled": true,
+      "root": "src/engine",
+      "components": [
+        {
+          "name": "scene",
+          "paths": [
+            "scene.js"
+          ],
+          "required": true
+        },
+        {
+          "name": "gift",
+          "paths": [
+            "gift.js"
+          ],
+          "required": true
+        },
+        {
+          "name": "environment",
+          "paths": [
+            "environment.js"
+          ],
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "product-tests",
+      "enabled": true,
+      "root": "tests",
+      "components": [
+        {
+          "name": "story",
+          "paths": [
+            "story.test.mjs"
+          ],
+          "required": true
+        },
+        {
+          "name": "gift-geometry",
+          "paths": [
+            "geometry.test.mjs"
+          ],
+          "required": true
+        },
+        {
+          "name": "character-manifest",
+          "paths": [
+            "character-manifest.test.mjs"
+          ],
+          "required": true
+        }
+      ]
+    }
+  ],
+  "code": {
+    "maxFunctionLines": 60
+  },
+  "css": {
+    "enabled": true,
+    "variablesFile": "src/shared/styles/tokens.css",
+    "roots": [
+      "src"
+    ],
+    "properties": [
+      "color",
+      "background-color",
+      "border-color",
+      "border-top-color",
+      "border-right-color",
+      "border-bottom-color",
+      "border-left-color",
+      "outline-color",
+      "fill",
+      "stroke",
+      "box-shadow",
+      "text-shadow",
+      "font-family",
+      "font-size",
+      "font-weight",
+      "line-height",
+      "letter-spacing",
+      "border-radius",
+      "margin",
+      "margin-top",
+      "margin-right",
+      "margin-bottom",
+      "margin-left",
+      "margin-inline",
+      "margin-block",
+      "padding",
+      "padding-top",
+      "padding-right",
+      "padding-bottom",
+      "padding-left",
+      "padding-inline",
+      "padding-block",
+      "margin-inline-start",
+      "margin-inline-end",
+      "margin-block-start",
+      "margin-block-end",
+      "padding-inline-start",
+      "padding-inline-end",
+      "padding-block-start",
+      "padding-block-end",
+      "gap",
+      "row-gap",
+      "column-gap",
+      "font",
+      "background",
+      "border",
+      "border-top",
+      "outline"
+    ]
+  },
+  "quality": {
+    "required": [
+      "lint",
+      "format",
+      "code",
+      "content",
+      "characters",
+      "gltf",
+      "unused",
+      "test",
+      "build"
+    ],
+    "commands": {
+      "lint": "npm run lint",
+      "format": "npm run check:format",
+      "code": "npm run check:code",
+      "content": "npm run check:content",
+      "characters": "npm run check:characters",
+      "gltf": "npm run check:gltf",
+      "unused": "npm run unused",
+      "test": "npm test",
+      "build": "npm run build"
+    }
+  },
+  "assets": {
+    "enabled": true,
+    "roots": [
+      "public/models/characters",
+      "public/posters"
+    ],
+    "maxFileBytes": 5242880,
+    "maxTotalBytes": 15728640,
+    "allowedExtensions": [
+      ".glb",
+      ".jpg",
+      ".webp",
+      ".png",
+      ".bin",
+      ".ktx2",
+      ".gltf"
+    ],
+    "forbiddenExtensions": [
+      ".blend",
+      ".fbx",
+      ".obj"
+    ]
+  }
+}

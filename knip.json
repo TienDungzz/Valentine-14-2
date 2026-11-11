@@ -1,0 +1,13 @@
+{
+  "entry": [
+    "index.html",
+    "scripts/**/*.mjs",
+    "tests/**/*.test.mjs"
+  ],
+  "project": [
+    "src/**/*.js",
+    "scripts/**/*.mjs",
+    "tests/**/*.mjs"
+  ],
+  "ignoreDependencies": []
+}
