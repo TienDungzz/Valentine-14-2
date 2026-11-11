@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
-import { SHAPES } from '../content/shapes.js';
+import { chocolateShape } from '../content/shapes.js';
 
 const smooth = (value) => { const x = THREE.MathUtils.clamp(value, 0, 1); return x * x * (3 - 2 * x); };
 
@@ -29,19 +29,19 @@ function extruded(shape, depth, material, bevel = .01) {
   return mesh;
 }
 
-export function createGift(items) {
-  const group = new THREE.Group();
-  group.name = 'Valentine_HeartGift';
-  group.position.set(0, 1.02, .18);
+
+function createMaterials() {
   const red = new THREE.MeshStandardMaterial({ color: '#6b1735', roughness: .5, metalness: .12 });
   const gold = new THREE.MeshStandardMaterial({ color: '#c9a35e', roughness: .35, metalness: .65 });
   const liner = new THREE.MeshStandardMaterial({ color: '#e7cda6', roughness: .95 });
   const paper = new THREE.MeshStandardMaterial({ color: '#baa087', roughness: .95 });
   const dark = new THREE.MeshStandardMaterial({ color: '#321b16', roughness: .35, metalness: .05 });
+  return { red, gold, liner, paper, dark };
+}
+
+function createHalves(group, { red, gold, liner }) {
   const halves = [];
   const lids = [];
-  const pieces = new Map();
-  const pickables = [];
   for (const sign of [-1, 1]) {
     const half = new THREE.Group();
     half.name = sign < 0 ? 'heart_half_left' : 'heart_half_right';
@@ -69,17 +69,23 @@ export function createGift(items) {
     halves.push(half);
     lids.push(lidPivot);
   }
+  return { halves, lids };
+}
+
+function createPieces(items, halves, { paper, dark }) {
+  const pieces = new Map();
+  const pickables = [];
   const positions = [[.28, -.32], [.46, -.1], [.21, -.09], [.37, .13], [.14, .13], [.23, .32], [.095, .43]];
   const svg = new SVGLoader();
-  for (const [index, item] of items.entries()) {
+  for (const item of items) {
     const halfIndex = item.half === 'left' ? 0 : 1;
     const sign = halfIndex === 0 ? -1 : 1;
-    const [x, z] = positions[index % 7];
+    const [x, z] = positions[(Number(item.id.slice(1)) - 1) % 7];
     const piece = new THREE.Group();
     piece.name = 'chocolate_' + item.id;
     piece.rotation.y = Math.PI;
     piece.position.set(sign * x, .105, z);
-    const shapes = svg.parse('<svg xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="' + SHAPES[index] + '"/></svg>').paths[0].toShapes();
+    const shapes = svg.parse('<svg xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="' + chocolateShape(item.id) + '"/></svg>').paths[0].toShapes();
     for (const shape of shapes) {
       const socket = extruded(shape, 2, paper, 2);
       socket.scale.setScalar(.00165);
@@ -102,7 +108,10 @@ export function createGift(items) {
     pieces.set(item.id, piece);
     pickables.push(proxy);
   }
-  function pose(time) {
+  return { pieces, pickables };
+}
+
+function poseGift(halves, lids, time) {
     const placed = smooth((time - .9) / 1.2);
     const joined = smooth((time - 2.1) / 1.35);
     const opened = smooth((time - 3.6) / 1.6);
@@ -113,6 +122,15 @@ export function createGift(items) {
       lids[index].rotation.z = -sign * opened * Math.PI * .8;
     });
   }
+
+export function createGift(items) {
+  const group = new THREE.Group();
+  group.name = 'Valentine_HeartGift';
+  group.position.set(0, 1.02, .18);
+  const materials = createMaterials();
+  const { halves, lids } = createHalves(group, materials);
+  const { pieces, pickables } = createPieces(items, halves, materials);
+  const pose = (time) => poseGift(halves, lids, time);
   function highlight(id) {
     for (const [key, piece] of pieces) piece.position.y = key === id ? .15 : .105;
   }

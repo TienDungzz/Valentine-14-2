@@ -1,4 +1,4 @@
-export const SHAPES = [
+const SHAPES = [
   'M50 88C40 77 8 56 8 32C8 9 37 3 50 24C63 3 92 9 92 32C92 56 60 77 50 88Z',
   'M50 5L62 34L94 37L70 59L77 91L50 75L23 91L30 59L6 37L38 34Z',
   'M76 9C28 4 7 44 28 75C42 97 70 97 89 77C55 84 30 45 76 9Z',
@@ -15,7 +15,14 @@ export const SHAPES = [
   'M36 22C20 -3 0 9 3 32C4 52 25 73 36 87L50 74L64 87C75 73 96 52 97 32C100 9 80 -3 64 22C58 11 50 15 50 28C50 15 42 11 36 22Z',
 ];
 
-export function shapeSvg(index, className = '') {
-  return '<svg class="' + className + '" viewBox="0 0 100 100" aria-hidden="true"><path fill-rule="evenodd" d="' + SHAPES[index] + '"/>' +
-    (index === 12 ? '<path fill="none" d="M7 21 50 54 93 21M8 80 37 51M92 80 64 51"/>' : '') + '</svg>';
+const SHAPES_BY_ID = Object.fromEntries(SHAPES.map((shape, index) => ['c' + String(index + 1).padStart(2, '0'), shape]));
+
+export function chocolateShape(id) {
+  if (!Object.hasOwn(SHAPES_BY_ID, id)) throw new Error('Unknown chocolate shape: ' + id);
+  return SHAPES_BY_ID[id];
+}
+
+export function shapeSvg(id, className = '') {
+  return '<svg class="' + className + '" viewBox="0 0 100 100" aria-hidden="true"><path fill-rule="evenodd" d="' + chocolateShape(id) + '"/>' +
+    (id === 'c13' ? '<path fill="none" d="M7 21 50 54 93 21M8 80 37 51M92 80 64 51"/>' : '') + '</svg>';
 }

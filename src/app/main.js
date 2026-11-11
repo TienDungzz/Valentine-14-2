@@ -38,10 +38,10 @@ app.innerHTML = `
     <p class="sr-only" id="announce" aria-live="polite"></p>
     <details class="picker" id="picker" hidden>
       <summary>Chọn chocolate · 14 điều thương dành cho em</summary>
-      <div class="picker__grid">${items.map((item, index) => `
-        <button class="picker__item" data-chocolate="${item.id}" aria-label="Chocolate ${index + 1}, ${item.shape}, chưa đọc">
+      <div class="picker__grid">${items.map((item) => `
+        <button class="picker__item" data-chocolate="${item.id}" aria-label="Chocolate ${Number(item.id.slice(1))}, ${item.shape}, chưa đọc">
           <span class="picker__check" aria-hidden="true"></span>
-          ${shapeSvg(index)}<span>${String(index + 1).padStart(2, '0')} · ${item.shape}</span>
+          ${shapeSvg(item.id)}<span>${String(Number(item.id.slice(1))).padStart(2, '0')} · ${item.shape}</span>
         </button>`).join('')}</div>
     </details>
     <footer class="footer"><span>MỘT CHÚT NGỌT NGÀO, MỘT CHÚT THƯƠNG.</span><span>GỬI BẰNG <span class="footer__heart">♡</span> VALENTINE RED</span></footer>
@@ -111,11 +111,11 @@ function render() {
   else if (phase === 'completed') html = '<p class="controls__lead">14 điều muốn nói, 2 người cùng viết tiếp.</p><div class="controls__actions">' + button('Trở lại hộp quà', 'return') + button('Xem lại hoạt cảnh', 'replay', true) + '</div><button class="text-button" data-action="restart">Bắt đầu lại</button>';
   controls.innerHTML = html;
   picker.hidden = !exploring;
-  for (const [index, item] of items.entries()) {
+  for (const item of items) {
     const element = picker.querySelector('[data-chocolate="' + item.id + '"]');
     const read = story.hasRead(item.id);
     element.classList.toggle('picker__item--read', read);
-    element.setAttribute('aria-label', 'Chocolate ' + (index + 1) + ', ' + item.shape + ', ' + (read ? 'đã đọc' : 'chưa đọc'));
+    element.setAttribute('aria-label', 'Chocolate ' + (Number(item.id.slice(1))) + ', ' + item.shape + ', ' + (read ? 'đã đọc' : 'chưa đọc'));
     element.querySelector('.picker__check').textContent = read ? '✓' : '';
     element.disabled = !exploring || Boolean(story.selected);
   }
@@ -132,8 +132,8 @@ function selectChocolate(id, opener) {
   const item = items.find((entry) => entry.id === id);
   if (!item || !story.select(id)) return;
   messageOpener = opener ?? controls.querySelector('[data-action="open-picker"]');
-  document.querySelector('#message-shape').innerHTML = shapeSvg(items.indexOf(item));
-  document.querySelector('#message-number').textContent = 'ĐIỀU THƯƠNG SỐ ' + String(items.indexOf(item) + 1).padStart(2, '0');
+  document.querySelector('#message-shape').innerHTML = shapeSvg(id);
+  document.querySelector('#message-number').textContent = 'ĐIỀU THƯƠNG SỐ ' + String(Number(item.id.slice(1))).padStart(2, '0');
   document.querySelector('#message-title').textContent = item.shape;
   document.querySelector('#message-text').textContent = item.message;
   try {

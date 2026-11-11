@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { SVGTestParser as DOMParser } from '../script/lib/svg-dom.mjs';
+import { SVGTestParser as DOMParser } from '../scripts/lib/svg-dom.mjs';
 import { Box3 } from 'three';
 import { createGift } from '../src/engine/gift.js';
 
@@ -43,4 +43,19 @@ test('halves start separated, join without changing piece count and selection is
   assert.equal(gift.pieces.get('c01').position.y, .105);
   gift.highlight(null);
   assert.equal(gift.pieces.get('c02').position.y, .105);
+});
+
+
+test('chocolate geometry and position remain tied to ID when content is reordered', () => {
+  const original = createGift(items);
+  const reordered = [...items];
+  [reordered[0], reordered[1]] = [reordered[1], reordered[0]];
+  const changed = createGift(reordered);
+  for (const item of items) {
+    const before = original.pieces.get(item.id);
+    const after = changed.pieces.get(item.id);
+    assert.deepEqual(after.position.toArray(), before.position.toArray(), item.id);
+    assert.deepEqual(Array.from(after.children[0].geometry.attributes.position.array),
+      Array.from(before.children[0].geometry.attributes.position.array), item.id);
+  }
 });
