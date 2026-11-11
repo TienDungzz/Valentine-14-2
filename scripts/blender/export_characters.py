@@ -54,6 +54,9 @@ def run():
         rig.location.x = -1 if label == 'Male' else 1
     scene.frame_set(1)
     bpy.ops.wm.save_as_mainfile(filepath=os.path.join(ROOT, 'art', 'characters', 'valentine', 'gift-story.blend'))
+    write_manifest()
+
+def write_manifest():
     manifest = {
         'fps': 30, 'frames': [1, 220],
         'characters': [

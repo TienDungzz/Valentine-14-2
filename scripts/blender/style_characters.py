@@ -23,27 +23,8 @@ def run():
     male = bpy.data.collections['CHAR_Male']
     female = bpy.data.collections['CHAR_Female']
     female_rig = next(o for o in female.objects if o.type == 'ARMATURE')
-    for obj in male.objects:
-        if obj.type != 'MESH':
-            continue
-        if any(term in obj.name for term in ['cardigan', 'knit sleeve', 'Patch pocket']):
-            obj.data.materials.clear()
-            obj.data.materials.append(cream)
-        elif 'trousers' in obj.name:
-            obj.data.materials.clear()
-            obj.data.materials.append(taupe)
-    for obj in list(female.objects):
-        if obj.type != 'MESH':
-            continue
-        if any(term in obj.name for term in ['shoulder bag', 'short sleeve', 'knee fraying']):
-            obj.hide_render = True
-            obj.hide_set(True)
-        elif 'grey top' in obj.name:
-            obj.data.materials.clear()
-            obj.data.materials.append(ivory)
-        elif 'jeans' in obj.name or 'knee beneath' in obj.name:
-            obj.data.materials.clear()
-            obj.data.materials.append(denim)
+    style_male(male, cream, taupe)
+    style_female(female, ivory, denim)
     for source in list(male.objects):
         if source.type != 'MESH' or not any(term in source.name for term in ['cardigan', 'knit sleeve', 'Patch pocket']):
             continue
@@ -77,6 +58,31 @@ def run():
     os.makedirs(os.path.join(ROOT, 'art', 'characters', 'valentine'), exist_ok=True)
     bpy.ops.wm.save_as_mainfile(filepath=os.path.join(ROOT, 'art', 'characters', 'valentine', 'wardrobe-studio.blend'))
     print('Wardrobe updated; source masters preserved.')
+
+def style_male(male, cream, taupe):
+    for obj in male.objects:
+        if obj.type != 'MESH':
+            continue
+        if any(term in obj.name for term in ['cardigan', 'knit sleeve', 'Patch pocket']):
+            obj.data.materials.clear()
+            obj.data.materials.append(cream)
+        elif 'trousers' in obj.name:
+            obj.data.materials.clear()
+            obj.data.materials.append(taupe)
+
+def style_female(female, ivory, denim):
+    for obj in list(female.objects):
+        if obj.type != 'MESH':
+            continue
+        if any(term in obj.name for term in ['shoulder bag', 'short sleeve', 'knee fraying']):
+            obj.hide_render = True
+            obj.hide_set(True)
+        elif 'grey top' in obj.name:
+            obj.data.materials.clear()
+            obj.data.materials.append(ivory)
+        elif 'jeans' in obj.name or 'knee beneath' in obj.name:
+            obj.data.materials.clear()
+            obj.data.materials.append(denim)
 
 if __name__ == '__main__':
     run()

@@ -28,7 +28,7 @@ def run():
             if obj:
                 col.objects.link(obj)
                 obj.name = label + '_' + obj.name
-    runpy.run_path(os.path.join(ROOT, 'script', 'blender', 'style_characters.py'), run_name='__main__')
+    runpy.run_path(os.path.join(ROOT, 'scripts', 'blender', 'style_characters.py'), run_name='__main__')
     scene.frame_start = 1
     scene.frame_end = 220
     scene.render.fps = 30
@@ -64,7 +64,7 @@ def run():
             head.rotation_euler.x = angle
             head.keyframe_insert('rotation_euler', frame=frame)
     scene.frame_set(1)
-    runpy.run_path(os.path.join(ROOT, 'script', 'blender', 'export_characters.py'), run_name='__main__')
+    runpy.run_path(os.path.join(ROOT, 'scripts', 'blender', 'export_characters.py'), run_name='__main__')
 
 if __name__ == '__main__':
     run()
