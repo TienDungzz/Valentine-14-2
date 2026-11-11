@@ -1,42 +1,21 @@
-# Valentine Red — Tài liệu dự án
+# Valentine Red — Tài liệu frontend 3D
 
-## Định hướng
+Website một trang dùng Vite, JavaScript ES modules và Three.js. Trải nghiệm chính: hai người ghép hai nửa hộp trái tim, khám phá 14 chocolate đen và 14 lời nhắn riêng.
 
-**2 người · 2 nửa trái tim · 14 miếng chocolate đen · 14 lời nhắn khác nhau.** Mỗi người giữ một nửa hộp có 7 miếng; hai nửa ghép thành một trái tim hoàn chỉnh.
-
-Bối cảnh: khu vườn sân thượng lúc chạng vạng. Website dùng **sân khấu trung tâm**: tiêu đề căn giữa phía trên, khung 3D lớn ở giữa, lời dẫn và CTA phía dưới. Logo góc trên trái, thiết lập góc trên phải; không có thanh header ngang.
-
-## Hiện trạng
-
-Đã có bản ứng dụng local Vite/Three.js, hai nhân vật chỉnh trang phục/hoạt cảnh, GLB tối ưu, dữ liệu 14 lời nhắn và bộ checker/test. Chưa triển khai hosting hoặc xác minh UI/hiệu năng trên trình duyệt. Xem [trạng thái và giới hạn](implementation-status.md) để phân biệt kết quả thực tế với mục tiêu trong đặc tả.
-
-Toàn bộ docs hiện dành cho Valentine Red, thay thế yêu cầu dự án trước. Người dùng cho phép dùng MCP Blender để sản xuất tài nguyên. Đã dùng MCP Blender chỉnh bản sao model, bake animation và render ảnh tham khảo; giữ nguyên hai master.
-
-## Kiểm tra tự động
-
-Chạy `npm run check`, `npm test` và `npm run build` sau `npm ci` (PowerShell có thể dùng `npm.cmd`). Xem [hướng dẫn checker](../script/README.md). `check:release` là preflight, không thay QA 3D, UI hoặc kiểm thử thiết bị.
-
-## Mục lục
-
-| Tài liệu | Nội dung |
+| Tài liệu | Nội dung của dự án |
 | --- | --- |
-| [Yêu cầu sản phẩm](product-requirements.md) | Phạm vi và nghiệm thu |
-| [Storyboard](scene-design.md) | Không gian, ghép hộp, camera, lời kết |
-| [UI/UX](ui-ux-spec.md) | Sân khấu trung tâm, responsive, truy cập |
-| [Luồng trải nghiệm](user-flows.md) | Đọc, hoàn thành, xem lại, lỗi |
-| [Hộp và chocolate](frame-authoring-guide.md) | 14 hình, lời nhắn, manifest |
-| [Kỹ thuật](technical-design.md) | State machine, engine và dữ liệu |
-| [ADR](architecture-decisions.md) | Quyết định và đề xuất |
-| [Thư mục](folder-structure.md) | Nguồn, runtime và QA |
-| [Quy chuẩn code](coding-standards.md) | TypeScript, CSS, Python |
-| [Blender MCP](blender-workflow.md) | Dựng, rig, xuất, kiểm tra |
-| [Kế hoạch](implementation-plan.md) | Mốc triển khai |
-| [Kiểm thử](testing-strategy.md) | Domain, UI, thiết bị, lỗi |
-| [Chất lượng](quality-checks.md) | Điều kiện bàn giao |
-| [Hiệu năng](performance-standards.md) | Mục tiêu và cách đo |
-| [Bảo mật](security-standards.md) | Nội dung, asset, hosting |
-| [Ngôn ngữ](localization.md) | Copy và thiết lập |
-| [Hình ảnh](theme.md) | Màu sắc, chữ, chuyển động |
-| [Triển khai](deployment-guide.md) | Build, deploy, rollback |
+| [Chạy dự án](getting-started.md) | Cài đặt, dev, test và build |
+| [Hồ sơ kỹ thuật](project.md) | Stack, cấu trúc thật và các lệnh kiểm tra |
+| [Frontend](frontend/README.md) | Entry, state, nội dung và vòng đời scene |
+| [Giao diện](ui/README.md) | Sân khấu trung tâm, DOM picker, modal và responsive |
+| [CSS](ui/css-variables.md) | Token tập trung và fallback |
+| [3D](3d/README.md) | Nguồn Blender, GLB web và pipeline sản xuất |
+| [Bằng chứng 3D](3d/performance-report.md) | Validator, dung lượng và phần chưa đo |
+| [Chất lượng](quality/README.md) | Kiểm tra sản phẩm và kiểm tra công cụ riêng |
+| [Bảo mật frontend](security/README.md) | Nội dung, storage, asset và hosting |
+| [Đánh giá bảo mật](security-review.md) | Phát hiện đang theo dõi và giới hạn |
+| [Tài liệu sản phẩm](product/README.md) | Storyboard, lời nhắn, UI và nghiệm thu |
 
-Yêu cầu sản phẩm là nguồn chính về phạm vi; UI/UX quyết định bố cục; storyboard quyết định diễn biến; hướng dẫn hộp quyết định ánh xạ. Khi thay đổi phải cập nhật đồng thời tài liệu và kiểm thử liên quan. Lời nhắn là nội dung khởi tạo, có thể biên tập nhưng phải giữ 14 thông điệp riêng.
+project-standards.json chỉ khai báo đường dẫn thực sự có trong website. example-standards/ là nguồn tham khảo riêng, không nằm trong bộ docs áp dụng hoặc artifact build.
+
+Không có backend/API, tài khoản, database, bộ chọn locale hoặc light/dark mode trong bản hiện tại. Không yêu cầu các thành phần này để website được kiểm tra hoặc build.

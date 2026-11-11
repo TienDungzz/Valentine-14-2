@@ -10,10 +10,10 @@ art/characters/               Master nhân vật, texture nguồn
 art/environment/              Sân thượng
 art/props/                    Hộp và 14 chocolate
 package.json                  Các lệnh check và test checker (đã có)
-script/check.mjs              CLI kiểm tra (đã có)
-script/lib/                   Logic kiểm tra (đã có)
-script/test/                  Test hồi quy checker (đã có)
-script/blender/               Chuẩn bị nhân vật, wardrobe, export, render preview
+scripts/check-project.mjs      Bộ điều phối theo project-standards.json
+scripts/lib/                   Logic kiểm tra (đã có)
+tests/                         Bộ test checker và Valentine (đã có)
+scripts/blender/               Chuẩn bị nhân vật, wardrobe, export, render preview
 src/app/                      Khởi tạo, controller, adapter
 src/domain/gift/              Schema, mapping, tiến độ, state thuần
 src/features/stage/           Khung sân khấu, loading, lỗi

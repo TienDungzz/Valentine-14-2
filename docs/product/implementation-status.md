@@ -28,3 +28,11 @@ Animation hiện là pass đầu, cần đánh giá cảm giác tự nhiên và 
 ## Quyết định triển khai khác đề xuất ban đầu
 
 Bản đầu dùng JavaScript ES modules + Vite + Three.js thay cho React/TypeScript còn ở trạng thái đề xuất. Domain tách khỏi engine; UI DOM dùng native dialog. Nếu chuyển TypeScript, phải bổ sung compiler/strict config và cập nhật checker/toolchain, không thêm tsconfig giả.
+
+## Chuẩn hóa 10/11/2026
+
+Chuyển sang scripts/, tests/ và docs/product/; thêm bộ checker mẫu, token CSS/fallback, ESLint 60 dòng, Python AST, Knip và Khronos Validator. Hồ sơ hiện hành: [project](../project.md), [ADR migration](../decisions/001-standards-adoption.md). Số test ở phần lịch sử phía trên là thời điểm 08/11, không phải số test của migration. Chưa chạy lại browser QA hoặc chỉnh .blend trong đợt này.
+
+## Phạm vi frontend sau tinh gọn
+
+Test mặc định chỉ gồm 14 test sản phẩm. 77 regression test công cụ đặt ở tests/tooling, chạy riêng khi sửa checker. Docs được viết lại cho frontend 3D; không còn backend/template hoặc yêu cầu Python trong đường kiểm tra website hằng ngày.

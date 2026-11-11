@@ -20,7 +20,7 @@ Dispose tài nguyên đúng ownership, không dispose shared resource còn dùng
 
 ## UI/CSS
 
-CSS BEM, style cạnh component, token shared/styles. Ví dụ stage__canvas, message-dialog__text, chocolate-picker__item--read. ARIA/disabled dùng semantic thật, không chỉ modifier.
+CSS BEM; bản một trang dùng main.css cho các block của trang, token tập trung tại tokens.css với fallback cho mọi var(). Khi tách component độc lập, style theo phạm vi của component. Ví dụ stage__canvas, message-dialog__text, chocolate-picker__item--read. ARIA/disabled dùng semantic thật, không chỉ modifier.
 
 Mobile-first, không khóa chiều cao cắt CTA. DOM picker tương đương canvas; modal quản focus/Escape. Đã đọc có dấu/chữ, vùng nhấn 44px, reduced motion cả CSS và timeline.
 
@@ -30,4 +30,4 @@ Script có entry point, tham số đường dẫn workspace và collection sở 
 
 ## Kiểm tra
 
-Đã có `npm run check`, các nhóm check:format/docs/content/code, `npm run test:checkers` và `npm run check:release`; xem [hướng dẫn checker](../script/README.md). Khi có app mới bổ sung lệnh build/typecheck thực tế và formatter/linter theo toolchain được chọn. Checker hiện tại không thay compiler, kiểm thử hành vi hoặc QA 3D. Test schema, mapping, tiến độ, state, reset/async và truy cập; không test chỉ sao chép CSS. Báo kiểm tra đã chạy và giới hạn thực tế.
+Đã có `npm run check`, các nhóm check:format/docs/content/code, `npm run test:tools` và `npm run check`; xem [hướng dẫn checker](../../scripts/README.md). Bản hiện tại đã có ESLint, Knip, PostCSS checker và build; typecheck không áp dụng cho ES modules. Checker hiện tại không thay compiler, kiểm thử hành vi hoặc QA 3D. Test schema, mapping, tiến độ, state, reset/async và truy cập; không test chỉ sao chép CSS. Báo kiểm tra đã chạy và giới hạn thực tế.

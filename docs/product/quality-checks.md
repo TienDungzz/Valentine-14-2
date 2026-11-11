@@ -6,7 +6,7 @@ Tất cả docs cùng phạm vi 2 người, 2 nửa hộp, 14 chocolate/14 lời
 
 ## Kiểm tra tự động hiện có
 
-Chạy `npm run check` và `npm run test:checkers`; phạm vi và giới hạn theo [hướng dẫn](../script/README.md). `npm run check:release` yêu cầu có source và lệnh build, không tự build hoặc xác nhận QA sản phẩm. Không dùng kết quả checker tĩnh để tuyên bố các tiêu chí dưới đã đạt.
+Chạy `npm run check` và `npm run test:tools`; phạm vi và giới hạn theo [hướng dẫn](../../scripts/README.md). `npm run check` gọi bộ check đầy đủ, có thực thi test/build và các quality gate; vẫn không xác nhận QA thủ công của sản phẩm. Không dùng kết quả checker tĩnh để tuyên bố các tiêu chí dưới đã đạt.
 
 ## Sản phẩm
 

@@ -6,7 +6,7 @@ Người dùng cho phép dùng MCP Blender để kiểm scene, dựng/sửa mode
 
 Khám phá công cụ Blender thực sự khả dụng và đọc mô tả; không giả định tên API phụ trợ. Kiểm kết nối, phiên bản, file đang mở, object/collection, đơn vị, rig, action và thay đổi chưa lưu trước chỉnh. Có thể dùng execute_blender_code với bpy trong Blender được kết nối.
 
-Xác định asset/collection và đích trong workspace; lưu bản phiên bản mới trước thay đổi lớn. Không xóa scene hoặc ghi đè master. Nếu không kết nối được, chuẩn bị script/brief và ghi phần chưa thực hiện.
+Xác định asset/collection và đích trong workspace; lưu bản phiên bản mới trước thay đổi lớn. Không xóa scene hoặc ghi đè master. Nếu không kết nối được, chuẩn bị scripts/brief và ghi phần chưa thực hiện.
 
 ## Nhóm tài nguyên dự kiến
 
@@ -37,8 +37,8 @@ Hộp đổi parent từ tay xuống bàn phải giữ world transform. Kiểm t
 
 ## Xuất và kiểm tra
 
-Lưu .blend trong art theo nhóm, script trong script/blender, GLB thử trong .qa. Chọn đúng node/clip, không xuất vật ẩn/camera/đèn ngoài hợp đồng. Kiểm đủ 14 node, 7 mỗi nửa, pivot nắp, rig/texture/clip.
+Lưu .blend trong art theo nhóm, script trong scripts/blender, GLB thử trong .qa. Chọn đúng node/clip, không xuất vật ẩn/camera/đèn ngoài hợp đồng. Kiểm đủ 14 node, 7 mỗi nửa, pivot nắp, rig/texture/clip.
 
 Nén chỉ khi loader có decoder và kiểm lại sau tối ưu. Preview các mốc trong Blender rồi kiểm trong loader web; render Blender không thay QA runtime. Bản đạt mới vào public kèm manifest và giấy phép; không thay nguồn master bằng bản nén.
 
-Asset ngoài cần nguồn/giấy phép. Dịch vụ tạo 3D có phí chỉ dùng khi được phép trong phạm vi tương ứng. Bàn giao nêu nguồn/script/GLB/clip/QA và phần chưa kiểm chứng.
+Asset ngoài cần nguồn/giấy phép. Dịch vụ tạo 3D có phí chỉ dùng khi được phép trong phạm vi tương ứng. Bàn giao nêu nguồn/scripts/GLB/clip/QA và phần chưa kiểm chứng.

@@ -32,8 +32,8 @@ Clip runtime: male_GiftStory và female_GiftStory. Các mesh có thể có skin 
 
 ## Tái tạo
 
-Trong Blender mới, dùng MCP chạy script/blender/prepare_characters.py trong workspace. Script từ chối nếu CHAR_Male/CHAR_Female đã có để tránh ghi đè. Để sửa tiếp, mở gift-story.blend thay vì dựng lại.
+Trong Blender mới, dùng MCP chạy scripts/blender/prepare_characters.py trong workspace. Script từ chối nếu CHAR_Male/CHAR_Female đã có để tránh ghi đè. Để sửa tiếp, mở gift-story.blend thay vì dựng lại.
 
-Các script tại [script/blender](../../script/blender): style_characters.py chỉnh bản sao, export_characters.py bake/xuất raw vào .qa/characters, render_preview.py tạo ảnh tham khảo từ hình học runtime. Sau xuất chạy npm run assets:optimize rồi npm run check:assets.
+Các script tại [scripts/blender](../../scripts/blender): style_characters.py chỉnh bản sao, export_characters.py bake/xuất raw vào .qa/characters, render_preview.py tạo ảnh tham khảo từ hình học runtime. Sau xuất chạy npm run assets:optimize rồi npm run check:assets và npm run check:characters.
 
 Nguồn .blend không phục vụ lên web. Không coi render Blender là bằng chứng animation/skin đã được kiểm trên trình duyệt; cần xem cả source và bản web sau khi chỉnh.

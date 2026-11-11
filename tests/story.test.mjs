@@ -11,7 +11,7 @@ function exploring() {
   return story;
 }
 test('runtime content matches all fourteen documented shapes and messages', () => {
-  const text = readFileSync(new URL('../docs/frame-authoring-guide.md', import.meta.url), 'utf8');
+  const text = readFileSync(new URL('../docs/product/frame-authoring-guide.md', import.meta.url), 'utf8');
   const rows = text.split('\n').filter((line) => /^\| c\d{2} \|/.test(line));
   assert.equal(rows.length, 14);
   for (const [index, row] of rows.entries()) {

@@ -4,14 +4,14 @@ Trải nghiệm Valentine: **2 người, 2 nửa trái tim, 14 chocolate đen v�
 
 ## Chạy tại máy
 
-Cần Node.js 22.12 trở lên. Trong PowerShell dùng npm.cmd nếu npm.ps1 bị chặn.
+Cần Node.js ^22.13.0 hoặc >=24. Python/Blender chỉ cần khi chỉnh công cụ hoặc xuất lại nhân vật. Trong PowerShell dùng npm.cmd nếu npm.ps1 bị chặn.
 
 ```powershell
 npm.cmd ci
 npm.cmd run dev
 ```
 
-Mở URL Local được Vite in ra (cấu hình lệnh dev hiện dùng cổng 5179). Không mở index.html trực tiếp từ ổ đĩa.
+Mở URL Local được Vite in ra (vite.config.js cấu hình cổng 5179). Không mở index.html trực tiếp từ ổ đĩa.
 
 ```powershell
 npm.cmd run check
@@ -33,6 +33,10 @@ Build ở dist/. Chưa triển khai hosting. base tương đối hỗ trợ đ�
 
 ## Tài nguyên và kiểm tra
 
-Nguồn gốc tại art/characters/male-cardigan.blend và female-grey-jeans.blend được giữ nguyên. Bản chỉnh ở art/characters/valentine/, GLB web ở public/models/characters/. Xem [nguồn nhân vật](art/characters/README.md), [checker](script/README.md) và [tài liệu dự án](docs/README.md).
+Nguồn gốc tại art/characters/male-cardigan.blend và female-grey-jeans.blend được giữ nguyên. Bản chỉnh ở art/characters/valentine/, GLB web ở public/models/characters/. Xem [nguồn nhân vật](art/characters/README.md), [checker](scripts/README.md) và [tài liệu dự án](docs/README.md).
 
-Đã kiểm logic, hình học, asset integrity và render tham khảo Blender. **Chưa kiểm trực tiếp giao diện, focus, animation và hiệu năng trên trình duyệt/điện thoại** vì Computer Use cho Chrome chưa được cấp quyền. Build/test thành công không thay cho các kiểm tra này. Xem [trạng thái triển khai](docs/implementation-status.md).
+Đã kiểm logic, hình học, asset integrity và render tham khảo Blender. **Chưa kiểm trực tiếp giao diện, focus, animation và hiệu năng trên trình duyệt/điện thoại** vì Computer Use cho Chrome chưa được cấp quyền. Build/test thành công không thay cho các kiểm tra này. Xem [trạng thái triển khai](docs/product/implementation-status.md).
+
+## Kiểm tra theo phạm vi frontend
+
+[Hồ sơ dự án](docs/project.md) mô tả đúng cấu trúc website. npm test chạy 14 test sản phẩm; npm run check kiểm frontend/3D và build. Test checker nằm riêng trong tests/tooling, chạy bằng npm run test:tools khi sửa công cụ. Python AST, audit và secret scan là lệnh riêng theo công việc, không là điều kiện để dev website. Xem [hướng dẫn](scripts/README.md).
